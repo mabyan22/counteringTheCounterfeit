@@ -8,18 +8,12 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-# Members API Route
-@app.route('/members')
-def members():
-    return {"members":["Member1","Member2","Member3"]}
-
 @app.route('/initialNews')
 @cross_origin()
 def initialNews():
     print(os.listdir('.'))
-    f = open('sample-response.json')
-    data = json.load(f)
-    f.close()
+    from initialDataLoad import returnResults
+    data = json.loads(returnResults())
     return data
 
 if __name__=="__main__":
