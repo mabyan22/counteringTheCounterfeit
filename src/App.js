@@ -2,15 +2,20 @@ import "./App.css";
 
 import React, { Component } from "react";
 import Navbar from "./components/Navbar";
+import SearchBar from "./components/SearchBar";
 import News from "./components/News";
 import { Loading } from "./components/Loading";
 //react-router
+
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+
 export default class App extends Component {
   render() {
     return (
       <>
        <Navbar />
+       <SearchBar/>
+       
         <Router>
     
           <Switch>
@@ -38,7 +43,7 @@ export default class App extends Component {
             </Route>
           </Switch>
         </Router>
-      </>
+         </>
     );
   }
 }

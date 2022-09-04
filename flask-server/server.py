@@ -16,5 +16,13 @@ def initialNews():
     data = json.loads(returnResults())
     return data
 
+@app.route('/searchQuery&query')
+@cross_origin()
+def searchQuery():
+    print(os.listdir('.'))
+    from backend import searchResults 
+    data =searchResults(query)
+    return data
+
 if __name__=="__main__":
     app.run(debug=True)

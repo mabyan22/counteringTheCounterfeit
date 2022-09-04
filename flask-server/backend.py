@@ -41,7 +41,7 @@ def findResults(listOfTopics):
     return topicsResponse
      
 
-if __name__== "__main__":
+def searchResults(query):
     # Ignore SSL certificate errors
     checkCert = ssl.create_default_context()
     checkCert.check_hostname = False
@@ -52,7 +52,7 @@ if __name__== "__main__":
 
     listOfItems = ["author","title","description","url","urlToImage","publishedAt"]
 
-    searchStr= str(input("Enter search string: "))
+    searchStr= query
     urlParameters = dict()
     urlParameters["q"]= searchStr
     urlParameters['apiKey']=apiKey 
@@ -85,21 +85,14 @@ if __name__== "__main__":
     if 'status' in jsDict and 'status' in jsDict and jsDict['status'] == 'ok':
         print("Total results: ", jsDict["totalResults"])
         responses=dict()
+        responses['articles']=list()
         #responses[i]=[name,author,title,description,url,urlToImage,publishedAt]
-        if jsDict["totalResults"]<5:
+        if jsDict["totalResults"]<10:
             noOfResults = int(jsDict["totalResults"])
         else:
-            noOfResults=5
-        for i in range(noOfResults):
-            for results in range(7):
-                if results != 0 :
-                    for item in listOfItems:
-                        responses[i][(listOfItems.index(item))+1] = jsDict["articles"][i][item]
-                else:
-                    responses[i]=[""]*7
-                    responses[i][0]=jsDict["articles"][i]["source"]["name"]
-        for j in range(noOfResults):
-            for k in range(7):
-                print(responses[i][k])   
+            noOfResults=10
+        for key in jsDict:
+            responses['articles'].extend(jsDict['articles'][:noOfResults])
+        return responses
     else:
-        print('==== Failure To Retrieve ====')
+        return "====Failure To Retrieve===="

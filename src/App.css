@@ -1,17 +1,17 @@
 body {
-  --color1: #61a4bc;
-  --color2: #1a132f;
-  --aqua3: mediumaquamarine;
-  --color4: #bbeff8ce;
+  --color1: rgb(228, 17, 17);
+  --color2: rgb(228, 17, 17);
+  --aqua3: grey;
+  --color4: grey;
   --boxshadow: #e6e1e1ce;
 }
 .sp-font {
-  font-family: "Oleo Script", cursive;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
 }
 .logo {
-  color: white;
+  color: black;
   transition: linear 1s;
-  font-family: "Oleo Script", cursive;
+  font-family: 'Gill Sans';
 }
 .logo:hover {
   background: linear-gradient(
@@ -24,20 +24,20 @@ body {
 }
 
 .navbar {
-  background: rgb(0, 212, 255);
+  background: black;
   background: linear-gradient(
     90deg,
-    rgba(0, 212, 255, 1) 11%,
-    rgba(100, 209, 78, 1) 98%
-  );
-  box-shadow: -1.6px 3px 4px rgb(201, 245, 224);
-  
+    white 90%,
+    white 10%
+    
+    
+  );  
   position: sticky;
   top:0px;
   z-index: 2;
 }
 .headline {
-  font-family: "Oleo Script", cursive;
+  font-family: 'Courier New', Courier, monospace;
   color: var(--aqua3);
   box-shadow: -1.6px 3px 10px var(--color4);
   border-radius: 0.5em;
@@ -65,7 +65,7 @@ body {
 }
 
 .nav-link {
-  color: white !important;
+  color: black !important;
   transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s;
 }
 .nav-link:hover {
@@ -85,4 +85,40 @@ body {
 .btn-color {
   background-color: var(--color1);
   color: white;
+}
+
+.searchbar-container {
+  position: relative;
+  display: flex;
+  min-width: 100px;
+}
+
+.search {
+  border: 1px solid grey;
+  border-radius: 5px;
+  height: 20px;
+  width: 100%;
+  padding: 2px 23px 2px 30px;
+  outline: 0;
+  background-color: #f5f5f5;
+}
+
+
+.search-icon {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  width: 14px;
+}
+
+.clear-icon {
+  position: absolute;
+  top: 8px;
+  left:300px;
+  width: 10px;
+  cursor: pointer; 
+}
+.search:hover, .search:focus {
+  border: 1.5px solid #009688;
+  background-color: white;
 }
