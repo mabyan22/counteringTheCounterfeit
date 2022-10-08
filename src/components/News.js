@@ -10,9 +10,12 @@ export class News extends Component {
       articles: [],
       pg: 1,
       totalArticles: 0,
+      searchValue: ""
     };
     this.handleNext = this.handleNext.bind(this);
     this.handlePrevious = this.handlePrevious.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   // function to handle next and previous.
   async handleNext() {
@@ -49,14 +52,47 @@ export class News extends Component {
     });
   }
 
+  async loadNews(initial,queryString){
+    var urlToCall;
+    if (initial) {
+      urlToCall = `http://localhost:5000/initialNews`;
+    } else {
+      urlToCall = `http://localhost:5000/searchQuery/${queryString}`;
+    }
+    this.setState({ loading: true });
+    let data = await fetch(urlToCall);
+    let parsedData = await data.json();
+    this.setState({
+      articles: parsedData.articles,
+      totalArticles: parsedData.totalResults,
+      loading: false,
+    });
+  }
+
+  handleChange(event) {
+    this.setState({searchValue: event.target.value});
+  }
+
+  async handleSubmit(event) {
+    const queryString = this.state.searchValue;
+    event.preventDefault();
+    this.loadNews(false,queryString);
+  }
+
   //render
   render() {
     return (
       <>
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          What do you want to know?
+          <input type="text" value={this.state.searchValue} onChange={this.handleChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
       {/* headline */}
         <div className="container my-3">
           <div className="text-center headline">
-          
             <h1>{this.props.category.charAt(0).toUpperCase() +this.props.category.slice(1)}</h1>
           </div>
           {/* spinner */}
@@ -90,21 +126,11 @@ export class News extends Component {
         </div>
         {/* previous pgno. and next buttons */}
         <div className="container-fluid page-button my-4 mx-2">
-          <button
-            disabled={this.state.pg <= 1}
-            className="btn-sm btn btn-color mx-5 "
-            onClick={this.handlePrevious}
-          >
-            &larr; Previous
+          <button disabled={this.state.pg <= 1} className="btn-sm btn btn-color mx-5 " onClick={this.handlePrevious}> 
+          &larr; Previous
           </button>
           <div className="page-count">{this.state.pg}</div>
-          <button
-            disabled={
-              !(this.state.pg + 1 <= Math.ceil(this.state.totalArticles / 12))
-            }
-            className="btn-sm btn btn-color mx-5"
-            onClick={this.handleNext}
-          >
+          <button disabled={!(this.state.pg + 1 <= Math.ceil(this.state.totalArticles / 12))} className="btn-sm btn btn-color mx-5" onClick={this.handleNext}>
             Next &rarr;
           </button>
         </div>
@@ -115,17 +141,7 @@ export class News extends Component {
   //didMount
   async componentDidMount() {
     window.scrollTo(0, 0);
-    const url = `http://localhost:5000/initialNews`;
-    this.setState({ loading: true });
-    let data = await fetch(url);
-    let parsedData = await data.json();
-    console.log(data);
-    console.log(parsedData);
-    this.setState({
-      articles: parsedData.articles,
-      totalArticles: parsedData.totalResults,
-      loading: false,
-    });
+    this.loadNews(true)
   }
 }
 

@@ -11,17 +11,18 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route('/initialNews')
 @cross_origin()
 def initialNews():
+    print("Owais")
     print(os.listdir('.'))
     from initialDataLoad import returnResults
     data = json.loads(returnResults())
     return data
 
-@app.route('/searchQuery&query')
+@app.route('/searchQuery/<queryString>')
 @cross_origin()
-def searchQuery():
+def searchQuery(queryString):
     print(os.listdir('.'))
     from backend import searchResults 
-    data =searchResults(query)
+    data = searchResults(queryString)
     return data
 
 if __name__=="__main__":
