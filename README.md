@@ -1,5 +1,4 @@
 # counteringTheCounterfeit
-##Fake news busting.
 
 Objectives:
 - To provide an accessible tool to debunk fake news
